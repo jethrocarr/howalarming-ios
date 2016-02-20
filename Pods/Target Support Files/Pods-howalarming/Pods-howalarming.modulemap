@@ -1,0 +1,6 @@
+framework module Pods_howalarming {
+  umbrella header "Pods-howalarming-umbrella.h"
+
+  export *
+  module * { export * }
+}
