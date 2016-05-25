@@ -9,12 +9,14 @@
 /* Begin PBXBuildFile section */
 		4B5C047E1C783C6B00EB6F40 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4B5C047D1C783C6B00EB6F40 /* GoogleService-Info.plist */; };
 		4B76B3681C7839D200226788 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B76B3671C7839D200226788 /* AppDelegate.swift */; };
-		4B76B36A1C7839D200226788 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B76B3691C7839D200226788 /* ViewController.swift */; };
+		4B76B36A1C7839D200226788 /* AlarmEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B76B3691C7839D200226788 /* AlarmEventTableViewController.swift */; };
 		4B76B36D1C7839D200226788 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B76B36B1C7839D200226788 /* Main.storyboard */; };
 		4B76B36F1C7839D300226788 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B76B36E1C7839D300226788 /* Assets.xcassets */; };
 		4B76B3721C7839D300226788 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B76B3701C7839D300226788 /* LaunchScreen.storyboard */; };
 		4B76B37D1C7839D300226788 /* howalarmingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B76B37C1C7839D300226788 /* howalarmingTests.swift */; };
 		4B76B3881C7839D300226788 /* howalarmingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B76B3871C7839D300226788 /* howalarmingUITests.swift */; };
+		4BC4ED1A1CF5A7E100280454 /* AlarmEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4ED191CF5A7E100280454 /* AlarmEvent.swift */; };
+		4BC4ED1C1CF5B4C400280454 /* AlarmEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4ED1B1CF5B4C400280454 /* AlarmEventTableViewCell.swift */; };
 		9B63FD1A874BB113132273C3 /* Pods_howalarming.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EE092FEB2218E174F96E19C /* Pods_howalarming.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,7 +42,7 @@
 		4B5C047D1C783C6B00EB6F40 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4B76B3641C7839D200226788 /* howalarming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = howalarming.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B76B3671C7839D200226788 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4B76B3691C7839D200226788 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		4B76B3691C7839D200226788 /* AlarmEventTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmEventTableViewController.swift; sourceTree = "<group>"; };
 		4B76B36C1C7839D200226788 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4B76B36E1C7839D300226788 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B76B3711C7839D300226788 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +53,8 @@
 		4B76B3831C7839D300226788 /* howalarmingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = howalarmingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B76B3871C7839D300226788 /* howalarmingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = howalarmingUITests.swift; sourceTree = "<group>"; };
 		4B76B3891C7839D300226788 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4BC4ED191CF5A7E100280454 /* AlarmEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmEvent.swift; sourceTree = "<group>"; };
+		4BC4ED1B1CF5B4C400280454 /* AlarmEventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmEventTableViewCell.swift; sourceTree = "<group>"; };
 		51B0869479B270817D612C74 /* Pods-howalarming.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-howalarming.release.xcconfig"; path = "Pods/Target Support Files/Pods-howalarming/Pods-howalarming.release.xcconfig"; sourceTree = "<group>"; };
 		9305E49BB2EA01063E218111 /* Pods-howalarming.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-howalarming.debug.xcconfig"; path = "Pods/Target Support Files/Pods-howalarming/Pods-howalarming.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,12 +120,14 @@
 		4B76B3661C7839D200226788 /* howalarming */ = {
 			isa = PBXGroup;
 			children = (
-				4B76B3671C7839D200226788 /* AppDelegate.swift */,
-				4B76B3691C7839D200226788 /* ViewController.swift */,
-				4B76B36B1C7839D200226788 /* Main.storyboard */,
-				4B76B36E1C7839D300226788 /* Assets.xcassets */,
-				4B76B3701C7839D300226788 /* LaunchScreen.storyboard */,
 				4B76B3731C7839D300226788 /* Info.plist */,
+				4B76B36B1C7839D200226788 /* Main.storyboard */,
+				4B76B3701C7839D300226788 /* LaunchScreen.storyboard */,
+				4B76B3671C7839D200226788 /* AppDelegate.swift */,
+				4BC4ED191CF5A7E100280454 /* AlarmEvent.swift */,
+				4B76B3691C7839D200226788 /* AlarmEventTableViewController.swift */,
+				4BC4ED1B1CF5B4C400280454 /* AlarmEventTableViewCell.swift */,
+				4B76B36E1C7839D300226788 /* Assets.xcassets */,
 			);
 			path = howalarming;
 			sourceTree = "<group>";
@@ -344,7 +350,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B76B36A1C7839D200226788 /* ViewController.swift in Sources */,
+				4BC4ED1A1CF5A7E100280454 /* AlarmEvent.swift in Sources */,
+				4B76B36A1C7839D200226788 /* AlarmEventTableViewController.swift in Sources */,
+				4BC4ED1C1CF5B4C400280454 /* AlarmEventTableViewCell.swift in Sources */,
 				4B76B3681C7839D200226788 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
