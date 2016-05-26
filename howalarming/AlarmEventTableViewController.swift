@@ -36,10 +36,10 @@ class AlarmEventTableViewController: UITableViewController {
     
     // MARK: Debugging
     func loadSampleEvents() {
-        let event1 = AlarmEvent(type: "alarm", code: "666", message: "The alarm is going off, evil is afoot", raw: "666")!
-        let event2 = AlarmEvent(type: "armed", code: "051", message: "System is armed, burgulars beware", raw: "051ARM")!
-        let event3 = AlarmEvent(type: "disarmed", code: "052", message: "System is disarmed, welcome home", raw: "052DISARM")!
-        let event4 = AlarmEvent(type: "info", code: "000", message: "This is a boring info level update", raw: "000INFO")!
+        let event1 = AlarmEvent(type: "alarm", code: "666", message: "The alarm is going off, evil is afoot", raw: "666", time: NSDate(timeIntervalSinceNow: Double(60)) )!
+        let event2 = AlarmEvent(type: "armed", code: "051", message: "System is armed, burgulars beware", raw: "051ARM", time: NSDate(timeIntervalSinceNow: Double(300)) )!
+        let event3 = AlarmEvent(type: "disarmed", code: "052", message: "System is disarmed, welcome home", raw: "052DISARM", time: NSDate(timeIntervalSinceNow: Double(3600)) )!
+        let event4 = AlarmEvent(type: "info", code: "000", message: "This is a boring info level update", raw: "000INFO", time: NSDate(timeIntervalSinceNow: Double(86400)) )!
 
         let newAlarmEvents = [event1, event2, event3, event4]
         
@@ -85,9 +85,11 @@ class AlarmEventTableViewController: UITableViewController {
         let event = JSON(notification.userInfo!)
         
         // Add event to list
-        let newAlarmEvent = AlarmEvent(type: event["type"].stringValue, code: event["code"].stringValue, message: event["message"].stringValue, raw: event["raw"].stringValue)!
-        let newIndexPath = NSIndexPath(forRow: alarmEvents.count, inSection: 0)
-        alarmEvents.append(newAlarmEvent)
+        let eventTime = NSDate(timeIntervalSince1970:Double(event["timestamp"].stringValue)!)
+        let newAlarmEvent = AlarmEvent(type: event["type"].stringValue, code: event["code"].stringValue, message: event["message"].stringValue, raw: event["raw"].stringValue, time: eventTime)!
+//        let newIndexPath = NSIndexPath(forRow: alarmEvents.count, inSection: 0)
+        let newIndexPath = NSIndexPath(forRow: 0, inSection: 0)
+        alarmEvents.insert(newAlarmEvent, atIndex: 0)
         tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
         
         
@@ -138,7 +140,12 @@ class AlarmEventTableViewController: UITableViewController {
         
         cell.typeLabel.text = alarmEvent.type
         cell.messageLabel.text = alarmEvent.message
-        cell.timeLabel.text = "Unknown"
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
+        dateFormatter.timeStyle = NSDateFormatterStyle.MediumStyle
+        dateFormatter.doesRelativeDateFormatting = true
+        cell.timeLabel.text = dateFormatter.stringFromDate(alarmEvent.time)
 
         return cell
     }

@@ -18,15 +18,17 @@ class AlarmEvent: NSObject {
     var code: String
     var message: String
     var raw: String
+    var time: NSDate
     
     
     // MARK: Initialization
-    init?(type: String, code: String, message: String, raw: String) {
+    init?(type: String, code: String, message: String, raw: String, time: NSDate) {
         // Initalize properties
         self.type = type
         self.code = code
         self.message = message
         self.raw = raw
+        self.time = time
 
         // TODO: No need for validation currently, they are all expected and all strings.
     }
