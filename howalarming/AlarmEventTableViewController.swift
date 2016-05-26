@@ -27,10 +27,6 @@ class AlarmEventTableViewController: UITableViewController {
         // Listen for GCM messages being recieved
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(handleReceivedMessage(_:)),
             name: appDelegate.messageKey, object: nil)
-        
-        
-        // TODO: Debugging benefits
-        loadSampleEvents()
     }
     
     deinit {
@@ -41,11 +37,17 @@ class AlarmEventTableViewController: UITableViewController {
     // MARK: Debugging
     func loadSampleEvents() {
         let event1 = AlarmEvent(type: "alarm", code: "666", message: "The alarm is going off, evil is afoot", raw: "666")!
-        let event2 = AlarmEvent(type: "disarmed", code: "051", message: "System is armed, burgulars beware", raw: "051ARM")!
-        let event3 = AlarmEvent(type: "armed", code: "052", message: "System is disarmed, welcome home", raw: "052DISARM")!
+        let event2 = AlarmEvent(type: "armed", code: "051", message: "System is armed, burgulars beware", raw: "051ARM")!
+        let event3 = AlarmEvent(type: "disarmed", code: "052", message: "System is disarmed, welcome home", raw: "052DISARM")!
         let event4 = AlarmEvent(type: "info", code: "000", message: "This is a boring info level update", raw: "000INFO")!
+
+        let newAlarmEvents = [event1, event2, event3, event4]
         
-        alarmEvents += [event1, event2, event3, event4]
+        for newAlarmEvent in newAlarmEvents {
+            let newIndexPath = NSIndexPath(forRow: alarmEvents.count, inSection: 0)
+            alarmEvents.append(newAlarmEvent)
+            tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+        }
     }
     
     
@@ -54,11 +56,20 @@ class AlarmEventTableViewController: UITableViewController {
         
         if let info = notification.userInfo as? Dictionary<String,String> {
             if let error = info["error"] {
+                
+                if error == "REMOTE_NOTIFICATION_SIMULATOR_NOT_SUPPORTED_NSERROR_DESCRIPTION" {
+                    // No GCM in the simulator, so load some sample data.
+                    // TODO: Need to write an event simulator
+                    loadSampleEvents()
+                }
+                
                 showAlert("Error registering with GCM", message: error)
+                
             } else if let _ = info["registrationToken"] {
                 let message = "Check the xcode debug console for the registration token that you " +
                 " can use with the demo server to send notifications to your device"
                 showAlert("Registration Successful!", message: message)
+                
             } else {
                 print ("Software failure. Guru meditation.")
             }
@@ -78,6 +89,16 @@ class AlarmEventTableViewController: UITableViewController {
         let newIndexPath = NSIndexPath(forRow: alarmEvents.count, inSection: 0)
         alarmEvents.append(newAlarmEvent)
         tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+        
+        
+        // Change the title colour in certain conditions (eg alarming)
+        // TODO: Want to get transparency or gradiant working.
+        
+        if event["type"].stringValue == "alarm" {
+            self.navigationController!.navigationBar.barTintColor = UIColor.init(colorLiteralRed: (255/255.0), green: (0/255.0), blue: (0/255.0), alpha: 1.0)
+        } else {
+            self.navigationController!.navigationBar.barTintColor = nil
+        }
     }
     
     func showAlert(title:String, message:String) {
