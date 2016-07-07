@@ -14,7 +14,7 @@ class AlarmEventTableViewController: UITableViewController {
     
     // MARK: Properties
     var alarmEvents = [AlarmEvent]()
-
+    @IBOutlet weak var armActionButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,6 +93,36 @@ class AlarmEventTableViewController: UITableViewController {
         tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
         
         
+        // Perform specific actions for different alarm types
+        // TODO: messy, need to move appDelegate to constructor
+        switch event["type"].stringValue {
+            case "alarm":
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                appDelegate.stateArmed = appDelegate.alarmStateArmed
+                
+                armActionButton.title = "Disarm"
+            break
+            
+            case "armed":
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                appDelegate.stateArmed = appDelegate.alarmStateArmed
+            
+                armActionButton.title = "Disarm"
+            break
+            
+            case "disarmed":
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                appDelegate.stateArmed = appDelegate.alarmStateDisarmed
+                
+                armActionButton.title = "Arm"
+            break
+            
+            default:
+            break
+            
+        }
+        
+        
         // Change the title colour in certain conditions (eg alarming)
         // TODO: Want to get transparency or gradiant working.
         
@@ -116,6 +146,57 @@ class AlarmEventTableViewController: UITableViewController {
         alert.addAction(dismissAction)
         self.presentViewController(alert, animated: true, completion: nil)
  
+    }
+    
+    // MARK: Perform user arm/disarm actions
+    @IBAction func armActionButton(sender: AnyObject) {
+        /*
+         * We perform the arm/disarm by checking the state and selecting the appropiate action
+         * and sending an command upstream via GCM to the HowAlarming server.
+         */
+        
+        
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        
+        var command: String
+        
+        switch (appDelegate.stateArmed) {
+            case appDelegate.alarmStateUnknown:
+                command = "disarm"
+            break
+
+            case appDelegate.alarmStateDisarmed:
+                command = "arm"
+            break
+            
+            case appDelegate.alarmStateArmed:
+                command = "disarm"
+            break
+            
+            default:
+                command = "disarm"
+            break
+        }
+        
+        print("Sending " + command + " action to GCM upstream")
+        
+        
+        if (appDelegate.connectedToGCM) {
+            let messageId = NSProcessInfo.processInfo().globallyUniqueString
+            let messageData = [
+                "registration_token": appDelegate.registrationToken!,
+                "command": command,
+                "timestamp": NSDate(timeIntervalSinceNow: Double(86400) )
+            ]
+            let messageTo: String = appDelegate.gcmSenderID! + "@gcm.googleapis.com"
+        
+            // TODO: Debug
+            print(messageTo)
+        
+            GCMService.sharedInstance().sendMessage(messageData, to: messageTo, withId: messageId)
+        } else {
+            print("Warning: Unable to send action due to GCM disconnection")
+        }
     }
     
     

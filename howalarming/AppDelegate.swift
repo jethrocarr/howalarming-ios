@@ -12,6 +12,10 @@ import Google
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GCMReceiverDelegate {
     
+    let alarmStateUnknown = 0
+    let alarmStateArmed = 1
+    let alarmStateDisarmed = 2
+    
     var window: UIWindow?
     
     var connectedToGCM = false
@@ -19,6 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
     var gcmSenderID: String?
     var registrationToken: String?
     var registrationOptions = [String: AnyObject]()
+    var messagesSent = 0
+    
+    var stateArmed = 0
     
     let registrationKey = "onRegistrationCompleted"
     let messageKey = "onMessageReceived"
@@ -49,18 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
             gcmConfig.receiverDelegate = self
             GCMService.sharedInstance().startWithConfig(gcmConfig)
             // [END start_gcm_service]
-            
-           /*
-            
-            // Load the right View Controller
-            self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-            
-            var storyboard = UIStoryboard(name: "Main", bundle: nil)
-            var initialViewController = storyboard.instantiateViewControllerWithIdentifier("ViewController") as! UIViewController
-            
-            self.window?.rootViewController = initialViewController
-            self.window?.makeKeyAndVisible()
-*/
+        
             return true
     }
     
@@ -102,8 +98,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
                 // [START_EXCLUDE]
                 self.subscribeToTopic()
                 // [END_EXCLUDE]
+
+                // Send ping to GCM server. This is used to make sure the GCM server is aware of
+                // our device and can register it if it's not already done so.
+                print("Sending ping message to gCM")
+                
+                let messageId = NSProcessInfo.processInfo().globallyUniqueString
+                let messageData = [
+                    "registration_token": self.registrationToken!,
+                    "command": "ping",
+                    "timestamp": NSDate(timeIntervalSinceNow: Double(86400) )
+                ]
+                let messageTo: String = self.gcmSenderID! + "@gcm.googleapis.com"
+                
+                print(messageTo)
+                
+                GCMService.sharedInstance().sendMessage(messageData, to: messageTo, withId: messageId)
+                
             }
         })
+        
+        
+
     }
     // [END connect_gcm_service]
     
@@ -120,6 +136,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
     func application( application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken
         deviceToken: NSData ) {
             // [END receive_apns_token]
+        
+        
             // [START get_gcm_reg_token]
             // Create a config and set a delegate that implements the GGLInstaceIDDelegate protocol.
             let instanceIDConfig = GGLInstanceIDConfig.defaultConfig()
@@ -202,13 +220,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
     func willSendDataMessageWithID(messageID: String!, error: NSError!) {
         if (error != nil) {
             // Failed to send the message.
+            print ("GCM message failed to send: " + messageID)
         } else {
             // Will send message, you can save the messageID to track the message
+            print ("GCM message pending delivery: " + messageID)
         }
     }
     
     func didSendDataMessageWithID(messageID: String!) {
         // Did successfully send message identified by messageID
+        print ("Successfully sent GCM message: " + messageID)
     }
     // [END upstream_callbacks]
     
