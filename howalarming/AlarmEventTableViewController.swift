@@ -27,10 +27,22 @@ class AlarmEventTableViewController: UITableViewController {
         // Listen for GCM messages being recieved
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(handleReceivedMessage(_:)),
             name: appDelegate.messageKey, object: nil)
+        
+        // Load the saved state
+        if let savedAlarmEvents = loadAlarmEvents() {
+            alarmEvents += savedAlarmEvents
+        }
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    
+    // MARK: Load data at launch
+    func loadAlarmEvents() -> [AlarmEvent]? {
+        print("Loading saved Alarm Events...")
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(AlarmEvent.ArchiveURL.path!) as? [AlarmEvent]
     }
     
     
@@ -66,10 +78,7 @@ class AlarmEventTableViewController: UITableViewController {
                 showAlert("Error registering with GCM", message: error)
                 
             } else if let _ = info["registrationToken"] {
-                let message = "Check the xcode debug console for the registration token that you " +
-                " can use with the demo server to send notifications to your device"
-                showAlert("Registration Successful!", message: message)
-                
+                print("Registration with GCM was successful");
             } else {
                 print ("Software failure. Guru meditation.")
             }
@@ -84,13 +93,32 @@ class AlarmEventTableViewController: UITableViewController {
         
         let event = JSON(notification.userInfo!)
         
-        // Add event to list
-        let eventTime = NSDate(timeIntervalSince1970:Double(event["timestamp"].stringValue)!)
-        let newAlarmEvent = AlarmEvent(type: event["type"].stringValue, code: event["code"].stringValue, message: event["message"].stringValue, raw: event["raw"].stringValue, time: eventTime)!
-//        let newIndexPath = NSIndexPath(forRow: alarmEvents.count, inSection: 0)
-        let newIndexPath = NSIndexPath(forRow: 0, inSection: 0)
-        alarmEvents.insert(newAlarmEvent, atIndex: 0)
-        tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Bottom)
+        if (event["raw"] == "HOWALARMING") {
+            // The one type of message we shouldn't display to the user.
+            print("Status message recieved from HowAlarming server. Silent information update.");
+        } else {
+            // Add event to the table of events for display
+            let eventTime = NSDate(timeIntervalSince1970:Double(event["timestamp"].stringValue)!)
+            let newAlarmEvent = AlarmEvent(type: event["type"].stringValue, code: event["code"].stringValue, message: event["message"].stringValue, raw: event["raw"].stringValue, time: eventTime)!
+            let newIndexPath = NSIndexPath(forRow: 0, inSection: 0)
+            alarmEvents.insert(newAlarmEvent, atIndex: 0)
+            tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Top)
+            
+            // Save events to persistent store
+            let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(alarmEvents, toFile: AlarmEvent.ArchiveURL.path!)
+            if !isSuccessfulSave {
+                print("Unable to save latest AlarmEvent data to storage")
+            }
+            
+            // Apply max size constraints on the table
+            if (alarmEvents.count > 50) {
+                print("Truncating max length event table...")
+                let lastIndexInt = alarmEvents.endIndex - 1
+                let lastIndexPath = NSIndexPath(forRow: lastIndexInt, inSection: 0)
+                alarmEvents.removeLast()
+                tableView.deleteRowsAtIndexPaths([lastIndexPath], withRowAnimation: .Bottom)
+            }
+        }
         
         
         // Perform specific actions for different alarm types
@@ -116,7 +144,7 @@ class AlarmEventTableViewController: UITableViewController {
                 
                 armActionButton.title = "Arm"
             break
-            
+
             default:
             break
             

@@ -12,10 +12,6 @@ import Google
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GCMReceiverDelegate {
     
-    let alarmStateUnknown = 0
-    let alarmStateArmed = 1
-    let alarmStateDisarmed = 2
-    
     var window: UIWindow?
     
     var connectedToGCM = false
@@ -25,6 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
     var registrationOptions = [String: AnyObject]()
     var messagesSent = 0
     
+    // We track alarm state in-app, but this also gets push from the server everytime the app view is
+    // opened to check the state, since it's possible the app has missed some messages.
+    let alarmStateUnknown = 0
+    let alarmStateArmed = 1
+    let alarmStateDisarmed = 2
     var stateArmed = 0
     
     let registrationKey = "onRegistrationCompleted"
@@ -100,8 +101,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
                 // [END_EXCLUDE]
 
                 // Send ping to GCM server. This is used to make sure the GCM server is aware of
-                // our device and can register it if it's not already done so.
-                print("Sending ping message to gCM")
+                // our device and can register it if it's not already done so. Technically, this should
+                // live in the registration portion of the application, but as our server is currently
+                // not persistent, we ping it on any time the application is opened.
+                //
+                // The ping also results in a silent status GCM message being sent back advising of
+                // the current alarm status (eg armed/disarmed) to assist with maintaining state.
+                print("Sending ping message to GCM")
                 
                 let messageId = NSProcessInfo.processInfo().globallyUniqueString
                 let messageData = [
