@@ -7,9 +7,6 @@ alarm via the HowAlarming platform.
 This is an open source application which you'll need to build yourself, you
 won't find it on the app store. See the instructions below.
 
-![Screenshot1](https://raw.githubusercontent.com/jethrocarr/howalarming-ios/master/doc/howalarming-screenshot1.jpg)
-![Screenshot2](https://raw.githubusercontent.com/jethrocarr/howalarming-ios/master/doc/howalarming-screenshot2.jpg)
-
 
 # Functionality
 
@@ -21,13 +18,17 @@ Unlike the Android app, this one doesn't do tricks like vibrate and ring
 non-stop in the event of an alarm, iOS doesn't offer us as much flexibilty as
 Android in this space.
 
+![Screenshot1](https://raw.githubusercontent.com/jethrocarr/howalarming-ios/master/doc/howalarming-screenshot1.jpg)
+![Screenshot2](https://raw.githubusercontent.com/jethrocarr/howalarming-ios/master/doc/howalarming-screenshot2.jpg)
+
 
 
 # Installation
 
 Firstly make sure you have a functional [HowAlarming](https://github.com/jethrocarr/howalarming)
 environment up and running. Recommend testing with the email alerter to ensure
-the basics are working first.
+the basics are working first before setting up `alert_gcm.py` to support this
+application.
 
 Then you need to build this application. To do so:
 
@@ -46,15 +47,7 @@ Then you need to build this application. To do so:
    application in the simulator since the simulator can't do any kind of push
    notification.
 
-6. After the first launch of the app, copy the `GCM registration token` which is
-   logged out in Xcode debug window. This is needed since the app currently
-   doesn't support calling back to the HowAlarming server with it's
-   registration ID and the server needs to know what it is.
-
-7. Add the token to your `config.yaml` file in HowAlarming and restart the
-   daemon.
-
-8. Do an arm & disarm of your alarm. It should generate a notification on your
+6. Do an arm & disarm of your alarm. It should generate a notification on your
    device. If this works, good job - celebrate your new
    internet-of-mobile-things alarm system.
 
