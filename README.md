@@ -7,8 +7,8 @@ alarm via the HowAlarming platform.
 This is an open source application which you'll need to build yourself, you
 won't find it on the app store. See the instructions below.
 
-![Screenshot1](https://raw.githubusercontent.com/jethrocarr/howalarming-ios/master/docs/howalarming-screenshot1.jpg)
-![Screenshot2](https://raw.githubusercontent.com/jethrocarr/howalarming-ios/master/docs/howalarming-screenshot2.jpg)
+![Screenshot1](https://raw.githubusercontent.com/jethrocarr/howalarming-ios/master/doc/howalarming-screenshot1.jpg)
+![Screenshot2](https://raw.githubusercontent.com/jethrocarr/howalarming-ios/master/doc/howalarming-screenshot2.jpg)
 
 
 # Functionality
