@@ -13,8 +13,14 @@ won't find it on the app store. See the instructions below.
 
 # Functionality
 
-Warning: This is currently a very crude work in progress, it does basically
-nothing other than get messages from HowAlarming and display them awkwardly.
+* Notification and display of alarm events sent by the [HowAlarming GCM server](https://github.com/jethrocarr/howalarming-gcm).
+* Allows the alarm to be armed or disarmed directly from the app.
+* Automatic registration of active apps to the GCM server.
+
+Unlike the Android app, this one doesn't do tricks like vibrate and ring
+non-stop in the event of an alarm, iOS doesn't offer us as much flexibilty as
+Android in this space.
+
 
 
 # Installation
