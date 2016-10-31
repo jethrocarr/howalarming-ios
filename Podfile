@@ -5,7 +5,7 @@ use_frameworks!
 
 target 'howalarming' do
   pod 'Google/CloudMessaging'
-  pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+  pod 'SwiftyJSON', '2.4.0' # Pin to Swift 2.3
 end
 
 target 'howalarmingTests' do

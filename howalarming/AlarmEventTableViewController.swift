@@ -42,7 +42,7 @@ class AlarmEventTableViewController: UITableViewController {
     // MARK: Load data at launch
     func loadAlarmEvents() -> [AlarmEvent]? {
         print("Loading saved Alarm Events...")
-        return NSKeyedUnarchiver.unarchiveObjectWithFile(AlarmEvent.ArchiveURL.path!) as? [AlarmEvent]
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(AlarmEvent.ArchiveURL!.path!) as? [AlarmEvent]
     }
     
     
@@ -105,7 +105,7 @@ class AlarmEventTableViewController: UITableViewController {
             tableView.insertRowsAtIndexPaths([newIndexPath], withRowAnimation: .Top)
             
             // Save events to persistent store
-            let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(alarmEvents, toFile: AlarmEvent.ArchiveURL.path!)
+            let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(alarmEvents, toFile: AlarmEvent.ArchiveURL!.path!)
             if !isSuccessfulSave {
                 print("Unable to save latest AlarmEvent data to storage")
             }

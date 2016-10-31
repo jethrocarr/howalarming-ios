@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '64C623F03A9EDA0D5480FACF'
+               BlueprintIdentifier = '6F472631181CCE78C33B5562'
                BlueprintName = 'Pods-howalarming'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Pods_howalarming.framework'>

@@ -53,6 +53,7 @@
 		4B76B3831C7839D300226788 /* howalarmingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = howalarmingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B76B3871C7839D300226788 /* howalarmingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = howalarmingUITests.swift; sourceTree = "<group>"; };
 		4B76B3891C7839D300226788 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4B7FB9031DC75F88000B98D6 /* howalarming.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = howalarming.entitlements; sourceTree = "<group>"; };
 		4BC4ED191CF5A7E100280454 /* AlarmEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmEvent.swift; sourceTree = "<group>"; };
 		4BC4ED1B1CF5B4C400280454 /* AlarmEventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmEventTableViewCell.swift; sourceTree = "<group>"; };
 		51B0869479B270817D612C74 /* Pods-howalarming.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-howalarming.release.xcconfig"; path = "Pods/Target Support Files/Pods-howalarming/Pods-howalarming.release.xcconfig"; sourceTree = "<group>"; };
@@ -120,6 +121,7 @@
 		4B76B3661C7839D200226788 /* howalarming */ = {
 			isa = PBXGroup;
 			children = (
+				4B7FB9031DC75F88000B98D6 /* howalarming.entitlements */,
 				4B76B3731C7839D300226788 /* Info.plist */,
 				4B76B36B1C7839D200226788 /* Main.storyboard */,
 				4B76B3701C7839D300226788 /* LaunchScreen.storyboard */,
@@ -230,6 +232,7 @@
 					4B76B3631C7839D200226788 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = ULS2535UA2;
+						LastSwiftMigration = 0810;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -241,10 +244,12 @@
 					};
 					4B76B3771C7839D300226788 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0810;
 						TestTargetID = 4B76B3631C7839D200226788;
 					};
 					4B76B3821C7839D300226788 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0810;
 						TestTargetID = 4B76B3631C7839D200226788;
 					};
 				};
@@ -496,6 +501,7 @@
 			baseConfigurationReference = 9305E49BB2EA01063E218111 /* Pods-howalarming.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = howalarming/howalarming.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = howalarming/Info.plist;
@@ -503,6 +509,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jethrocarr.howalarming;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -511,6 +518,7 @@
 			baseConfigurationReference = 51B0869479B270817D612C74 /* Pods-howalarming.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = howalarming/howalarming.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = howalarming/Info.plist;
@@ -518,6 +526,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jethrocarr.howalarming;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -529,6 +538,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jethrocarr.howalarmingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/howalarming.app/howalarming";
 			};
 			name = Debug;
@@ -541,6 +551,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jethrocarr.howalarmingTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/howalarming.app/howalarming";
 			};
 			name = Release;
@@ -552,6 +563,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jethrocarr.howalarmingUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = howalarming;
 				USES_XCTRUNNER = YES;
 			};
@@ -564,6 +576,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jethrocarr.howalarmingUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = howalarming;
 				USES_XCTRUNNER = YES;
 			};
