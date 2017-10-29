@@ -130,6 +130,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
     
     // [START disconnect_gcm_service]
     func applicationDidEnterBackground(_ application: UIApplication) {
+        print("Disconnecting GCM service...")
+        
         GCMService.sharedInstance().disconnect()
         self.connectedToGCM = false
     }
@@ -173,7 +175,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
     // [START ack_message_reception]
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
         
-        print("Foreground notification received: \(userInfo)")
+        print("Remote notification received: \(userInfo)")
         
         // This works only if the app started the GCM service
         GCMService.sharedInstance().appDidReceiveMessage(userInfo);
@@ -183,9 +185,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
         NotificationCenter.default.post(name: notificationName, object: nil, userInfo: userInfo)
     }
     
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler handler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        print("Background notification received: \(userInfo)")
+        print("Remote notification received w/ handler: \(userInfo)")
         
         // This works only if the app started the GCM service
         GCMService.sharedInstance().appDidReceiveMessage(userInfo);
@@ -195,7 +197,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
         NotificationCenter.default.post(name: notificationName, object: nil, userInfo: userInfo)
         
         // Invoke the completion handler passing the appropriate UIBackgroundFetchResult value
-        completionHandler(UIBackgroundFetchResult.noData);
+        handler(UIBackgroundFetchResult.noData);
     }
     // [END ack_message_reception]
     
@@ -227,7 +229,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
     // [END on_token_refresh]
     
     // [START upstream_callbacks]
-    func willSendDataMessageWithID(messageID: String!, error: NSError!) {
+    func willSendDataMessage(withID messageID: String!, error: Error!) {
         if (error != nil) {
             // Failed to send the message.
             print ("GCM message failed to send: " + messageID)
@@ -237,7 +239,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
         }
     }
     
-    func didSendDataMessageWithID(messageID: String!) {
+    func didSendDataMessage(withID messageID: String!) {
         // Did successfully send message identified by messageID
         print ("Successfully sent GCM message: " + messageID)
     }
@@ -247,6 +249,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
         // Some messages sent to this device were deleted on the GCM server before reception, likely
         // because the TTL expired. The client should notify the app server of this, so that the app
         // server can resend those messages.
+        print("You lost messages due to expiration")
     }
+    
     
 }

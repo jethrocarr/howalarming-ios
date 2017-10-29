@@ -10,6 +10,7 @@ import UIKit
 import Google
 import SwiftyJSON
 
+
 class AlarmEventTableViewController: UITableViewController {
     
     // MARK: Properties
@@ -182,7 +183,7 @@ class AlarmEventTableViewController: UITableViewController {
     }
     
     // MARK: Perform user arm/disarm actions
-    @IBAction func armActionButton(sender: AnyObject) {
+    @IBAction func armActionButton(_ sender: Any) {
         /*
          * We perform the arm/disarm by checking the state and selecting the appropiate action
          * and sending an command upstream via GCM to the HowAlarming server.
