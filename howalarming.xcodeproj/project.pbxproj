@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		235CFF78D21AAE398105A90C /* Pods_howalarming.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 350637C85CD29DA394D02A28 /* Pods_howalarming.framework */; };
+		3253D0850D3851C22CAA3280 /* Pods_howalarmingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B30D1FD9C6FBED85AD00CE3 /* Pods_howalarmingTests.framework */; };
 		4B5C047E1C783C6B00EB6F40 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4B5C047D1C783C6B00EB6F40 /* GoogleService-Info.plist */; };
 		4B76B3681C7839D200226788 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B76B3671C7839D200226788 /* AppDelegate.swift */; };
 		4B76B36A1C7839D200226788 /* AlarmEventTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B76B3691C7839D200226788 /* AlarmEventTableViewController.swift */; };
@@ -17,7 +19,7 @@
 		4B76B3881C7839D300226788 /* howalarmingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B76B3871C7839D300226788 /* howalarmingUITests.swift */; };
 		4BC4ED1A1CF5A7E100280454 /* AlarmEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4ED191CF5A7E100280454 /* AlarmEvent.swift */; };
 		4BC4ED1C1CF5B4C400280454 /* AlarmEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4ED1B1CF5B4C400280454 /* AlarmEventTableViewCell.swift */; };
-		9B63FD1A874BB113132273C3 /* Pods_howalarming.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EE092FEB2218E174F96E19C /* Pods_howalarming.framework */; };
+		90A254AE609C9994A22D9DAB /* Pods_howalarmingUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F7E6B5F83E08FDB1045FC2 /* Pods_howalarmingUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2EE092FEB2218E174F96E19C /* Pods_howalarming.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_howalarming.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		14F7E6B5F83E08FDB1045FC2 /* Pods_howalarmingUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_howalarmingUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2BE6D80298189151B8694503 /* Pods-howalarmingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-howalarmingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-howalarmingTests/Pods-howalarmingTests.release.xcconfig"; sourceTree = "<group>"; };
+		350637C85CD29DA394D02A28 /* Pods_howalarming.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_howalarming.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B5C047D1C783C6B00EB6F40 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4B76B3641C7839D200226788 /* howalarming.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = howalarming.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B76B3671C7839D200226788 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -56,8 +60,12 @@
 		4B7FB9031DC75F88000B98D6 /* howalarming.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = howalarming.entitlements; sourceTree = "<group>"; };
 		4BC4ED191CF5A7E100280454 /* AlarmEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmEvent.swift; sourceTree = "<group>"; };
 		4BC4ED1B1CF5B4C400280454 /* AlarmEventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmEventTableViewCell.swift; sourceTree = "<group>"; };
-		51B0869479B270817D612C74 /* Pods-howalarming.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-howalarming.release.xcconfig"; path = "Pods/Target Support Files/Pods-howalarming/Pods-howalarming.release.xcconfig"; sourceTree = "<group>"; };
-		9305E49BB2EA01063E218111 /* Pods-howalarming.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-howalarming.debug.xcconfig"; path = "Pods/Target Support Files/Pods-howalarming/Pods-howalarming.debug.xcconfig"; sourceTree = "<group>"; };
+		8B30D1FD9C6FBED85AD00CE3 /* Pods_howalarmingTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_howalarmingTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9EA4F7E6A3D298AFBE7B1073 /* Pods-howalarming.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-howalarming.release.xcconfig"; path = "Pods/Target Support Files/Pods-howalarming/Pods-howalarming.release.xcconfig"; sourceTree = "<group>"; };
+		A5C81593F2610907E218EE85 /* Pods-howalarmingUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-howalarmingUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-howalarmingUITests/Pods-howalarmingUITests.release.xcconfig"; sourceTree = "<group>"; };
+		A83576AD78302B2DE6816C71 /* Pods-howalarming.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-howalarming.debug.xcconfig"; path = "Pods/Target Support Files/Pods-howalarming/Pods-howalarming.debug.xcconfig"; sourceTree = "<group>"; };
+		B47714D602DCE7240303D5DB /* Pods-howalarmingUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-howalarmingUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-howalarmingUITests/Pods-howalarmingUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		F0E6DE0E088868AF18CF9CD9 /* Pods-howalarmingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-howalarmingTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-howalarmingTests/Pods-howalarmingTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B63FD1A874BB113132273C3 /* Pods_howalarming.framework in Frameworks */,
+				235CFF78D21AAE398105A90C /* Pods_howalarming.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3253D0850D3851C22CAA3280 /* Pods_howalarmingTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,17 +89,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				90A254AE609C9994A22D9DAB /* Pods_howalarmingUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		30A25865FFC606306106BE69 /* Pods */ = {
+		05A4D7DFB4BD8A62A238680F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9305E49BB2EA01063E218111 /* Pods-howalarming.debug.xcconfig */,
-				51B0869479B270817D612C74 /* Pods-howalarming.release.xcconfig */,
+				A83576AD78302B2DE6816C71 /* Pods-howalarming.debug.xcconfig */,
+				9EA4F7E6A3D298AFBE7B1073 /* Pods-howalarming.release.xcconfig */,
+				F0E6DE0E088868AF18CF9CD9 /* Pods-howalarmingTests.debug.xcconfig */,
+				2BE6D80298189151B8694503 /* Pods-howalarmingTests.release.xcconfig */,
+				B47714D602DCE7240303D5DB /* Pods-howalarmingUITests.debug.xcconfig */,
+				A5C81593F2610907E218EE85 /* Pods-howalarmingUITests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -103,8 +117,8 @@
 				4B76B37B1C7839D300226788 /* howalarmingTests */,
 				4B76B3861C7839D300226788 /* howalarmingUITests */,
 				4B76B3651C7839D200226788 /* Products */,
-				30A25865FFC606306106BE69 /* Pods */,
-				BA1CE923A176235BCA91D2A1 /* Frameworks */,
+				05A4D7DFB4BD8A62A238680F /* Pods */,
+				E777B7012DDAF85E193B5872 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -152,10 +166,12 @@
 			path = howalarmingUITests;
 			sourceTree = "<group>";
 		};
-		BA1CE923A176235BCA91D2A1 /* Frameworks */ = {
+		E777B7012DDAF85E193B5872 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2EE092FEB2218E174F96E19C /* Pods_howalarming.framework */,
+				350637C85CD29DA394D02A28 /* Pods_howalarming.framework */,
+				8B30D1FD9C6FBED85AD00CE3 /* Pods_howalarmingTests.framework */,
+				14F7E6B5F83E08FDB1045FC2 /* Pods_howalarmingUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -167,12 +183,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4B76B38C1C7839D300226788 /* Build configuration list for PBXNativeTarget "howalarming" */;
 			buildPhases = (
-				505C2CFC661A2EE6326F45E7 /* Check Pods Manifest.lock */,
+				04E4E88EA601626FE3BE84A9 /* [CP] Check Pods Manifest.lock */,
 				4B76B3601C7839D200226788 /* Sources */,
 				4B76B3611C7839D200226788 /* Frameworks */,
 				4B76B3621C7839D200226788 /* Resources */,
-				710F6B524D0C9BE02524D03F /* Embed Pods Frameworks */,
-				01237CA1E6C1DEE856C8A6DD /* Copy Pods Resources */,
+				8DAED49C00FD1E0A4CBB09FE /* [CP] Embed Pods Frameworks */,
+				CB0C6A03191F7D1525C0AC4F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -187,9 +203,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4B76B38F1C7839D300226788 /* Build configuration list for PBXNativeTarget "howalarmingTests" */;
 			buildPhases = (
+				512B10C4D982FDED0B70CCE4 /* [CP] Check Pods Manifest.lock */,
 				4B76B3741C7839D300226788 /* Sources */,
 				4B76B3751C7839D300226788 /* Frameworks */,
 				4B76B3761C7839D300226788 /* Resources */,
+				8478F3238798048E5616A754 /* [CP] Embed Pods Frameworks */,
+				218A03B5764BF22211DE307F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -205,9 +224,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4B76B3921C7839D300226788 /* Build configuration list for PBXNativeTarget "howalarmingUITests" */;
 			buildPhases = (
+				CC7DF7B21C90551739C72673 /* [CP] Check Pods Manifest.lock */,
 				4B76B37F1C7839D300226788 /* Sources */,
 				4B76B3801C7839D300226788 /* Frameworks */,
 				4B76B3811C7839D300226788 /* Resources */,
+				B79B51AFB968D81531980B6E /* [CP] Embed Pods Frameworks */,
+				AFB781E88A4424F99C02E650 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -226,7 +248,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Jethro Carr";
 				TargetAttributes = {
 					4B76B3631C7839D200226788 = {
@@ -303,14 +325,128 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		01237CA1E6C1DEE856C8A6DD /* Copy Pods Resources */ = {
+		04E4E88EA601626FE3BE84A9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-howalarming-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		218A03B5764BF22211DE307F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-howalarmingTests/Pods-howalarmingTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		512B10C4D982FDED0B70CCE4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-howalarmingTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8478F3238798048E5616A754 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-howalarmingTests/Pods-howalarmingTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8DAED49C00FD1E0A4CBB09FE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-howalarming/Pods-howalarming-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-howalarming/Pods-howalarming-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AFB781E88A4424F99C02E650 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-howalarmingUITests/Pods-howalarmingUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B79B51AFB968D81531980B6E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-howalarmingUITests/Pods-howalarmingUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CB0C6A03191F7D1525C0AC4F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,34 +454,22 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-howalarming/Pods-howalarming-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		505C2CFC661A2EE6326F45E7 /* Check Pods Manifest.lock */ = {
+		CC7DF7B21C90551739C72673 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-howalarmingUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		710F6B524D0C9BE02524D03F /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-howalarming/Pods-howalarming-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -421,13 +545,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -454,6 +586,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -466,13 +599,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -491,6 +632,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -498,40 +641,43 @@
 		};
 		4B76B38D1C7839D300226788 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9305E49BB2EA01063E218111 /* Pods-howalarming.debug.xcconfig */;
+			baseConfigurationReference = A83576AD78302B2DE6816C71 /* Pods-howalarming.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = howalarming/howalarming.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = howalarming/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jethrocarr.howalarming;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
 		4B76B38E1C7839D300226788 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 51B0869479B270817D612C74 /* Pods-howalarming.release.xcconfig */;
+			baseConfigurationReference = 9EA4F7E6A3D298AFBE7B1073 /* Pods-howalarming.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = howalarming/howalarming.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = howalarming/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jethrocarr.howalarming;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
 		4B76B3901C7839D300226788 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F0E6DE0E088868AF18CF9CD9 /* Pods-howalarmingTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = howalarmingTests/Info.plist;
@@ -545,6 +691,7 @@
 		};
 		4B76B3911C7839D300226788 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2BE6D80298189151B8694503 /* Pods-howalarmingTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = howalarmingTests/Info.plist;
@@ -558,6 +705,7 @@
 		};
 		4B76B3931C7839D300226788 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B47714D602DCE7240303D5DB /* Pods-howalarmingUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = howalarmingUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -571,6 +719,7 @@
 		};
 		4B76B3941C7839D300226788 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A5C81593F2610907E218EE85 /* Pods-howalarmingUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = howalarmingUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

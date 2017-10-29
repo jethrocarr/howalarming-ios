@@ -18,15 +18,15 @@ class AlarmEvent: NSObject, NSCoding {
     var code: String
     var message: String
     var raw: String
-    var time: NSDate
+    var time: Date
     
     // MARK: Data storage paths
-    static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-    static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("AlarmEvent")
+    static let DocumentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("AlarmEvent")
     
     
     // MARK: Initialization
-    init?(type: String, code: String, message: String, raw: String, time: NSDate) {
+    init?(type: String, code: String, message: String, raw: String, time: Date) {
         // Initalize properties
         self.type = type
         self.code = code
@@ -41,20 +41,21 @@ class AlarmEvent: NSObject, NSCoding {
     
     
     // MARK: NSCoding
-    func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(type, forKey: "type")
-        aCoder.encodeObject(code, forKey: "code")
-        aCoder.encodeObject(message, forKey: "message")
-        aCoder.encodeObject(raw, forKey: "raw")
-        aCoder.encodeObject(time, forKey: "time")
+    func encode(with: NSCoder) {
+        with.encode(type, forKey: "type")
+        with.encode(code, forKey: "code")
+        with.encode(message, forKey: "message")
+        with.encode(raw, forKey: "raw")
+        with.encode(time, forKey: "time")
     }
     
-    required convenience init?(coder aDecoder: NSCoder) {
-        let type = aDecoder.decodeObjectForKey("type") as! String
-        let code = aDecoder.decodeObjectForKey("code") as! String
-        let message = aDecoder.decodeObjectForKey("message") as! String
-        let raw = aDecoder.decodeObjectForKey("raw") as! String
-        let time = aDecoder.decodeObjectForKey("time") as! NSDate
+    // This is an alternative init for NSCoding compatibility. Basically "alternative init" function.
+    required convenience init?(coder: NSCoder) {
+        let type = coder.decodeObject(forKey: "type") as! String
+        let code = coder.decodeObject(forKey: "code") as! String
+        let message = coder.decodeObject(forKey: "message") as! String
+        let raw = coder.decodeObject(forKey: "raw") as! String
+        let time = coder.decodeObject(forKey: "time") as! Date
         
         self.init(type: type, code: code, message: message, raw: raw, time: time)
     }
