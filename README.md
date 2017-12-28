@@ -12,7 +12,7 @@ won't find it on the app store. See the instructions below.
 
 * Notification and display of alarm events sent by the [HowAlarming GCM server](https://github.com/jethrocarr/howalarming-gcm).
 * Allows the alarm to be armed or disarmed directly from the app.
-* Automatic registration of active apps to the GCM server.
+* Automatic registration of active apps to the FCM/GCM server.
 
 Unlike the Android app, this one doesn't do tricks like vibrate and ring
 non-stop in the event of an alarm, iOS doesn't offer us as much flexibilty as
@@ -34,16 +34,15 @@ Then you need to build this application. To do so:
 
 1. Check out this source code repository.
 
-2. Create a new project in Google Apps and enable Google Compute Messaging in
-   it at the [Google Developer Console](https://developers.google.com/mobile/add).
-   As part of this step, you will import your APNS certs from Apple into Google
-   as they'll do the actual pushes to APNS for you.
+2. Create a new project in [Google Firebase Console](https://console.firebase.google.com)
+   and enable Cloud Messaging. As part of this step, you will import your APNS
+   certs from Apple into Google as Google will do the actual pushes to APNS for you.
 
 3. Copy the provided `GoogleService-Info.plist` file to the root of the repo.
 
 4. Open this project with XCode.
 
-5. Connect an iOS device and do a build/run. You unfortunatly can't test this
+5. Connect an iOS device and do a build/run. You unfortunately can't test this
    application in the simulator since the simulator can't do any kind of push
    notification.
 
@@ -64,9 +63,9 @@ Messaging which would instantly make people dependent on my systems. And then
 I'm just another dodgy Internet-of-Things vendors with no SLA and no recourse if
 I just turned it off one day.
 
-Setting up GCM with Google and building the app is more work, but it guarantees
+Setting up FCM with Google and building the app is more work, but it guarantees
 that the only third party between your HowAlarming server-side and your
-HowAlarming client-side is yourself, Google's GCM service and Apple's APNS.
+HowAlarming client-side is yourself, Google's FCM service and Apple's APNS.
 
 Annoyingly Apple *do* require you to have a current developer account to get a
 signed cert for APNS so you'll have to fork up $100 a year if you don't already
@@ -94,7 +93,7 @@ instead (or in addition?) to beer.
 
 Unless otherwise stated, all source code is:
 
-    Copyright (c) 2016 Jethro Carr
+    Copyright (c) 2017 Jethro Carr
 
     Permission is hereby granted, free of charge, to any person obtaining a copy of
     this software and associated documentation files (the "Software"), to deal in

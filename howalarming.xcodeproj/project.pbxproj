@@ -15,8 +15,6 @@
 		4B76B36D1C7839D200226788 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B76B36B1C7839D200226788 /* Main.storyboard */; };
 		4B76B36F1C7839D300226788 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B76B36E1C7839D300226788 /* Assets.xcassets */; };
 		4B76B3721C7839D300226788 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B76B3701C7839D300226788 /* LaunchScreen.storyboard */; };
-		4B76B37D1C7839D300226788 /* howalarmingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B76B37C1C7839D300226788 /* howalarmingTests.swift */; };
-		4B76B3881C7839D300226788 /* howalarmingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B76B3871C7839D300226788 /* howalarmingUITests.swift */; };
 		4BC4ED1A1CF5A7E100280454 /* AlarmEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4ED191CF5A7E100280454 /* AlarmEvent.swift */; };
 		4BC4ED1C1CF5B4C400280454 /* AlarmEventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC4ED1B1CF5B4C400280454 /* AlarmEventTableViewCell.swift */; };
 		90A254AE609C9994A22D9DAB /* Pods_howalarmingUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F7E6B5F83E08FDB1045FC2 /* Pods_howalarmingUITests.framework */; };
@@ -52,10 +50,8 @@
 		4B76B3711C7839D300226788 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4B76B3731C7839D300226788 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B76B3781C7839D300226788 /* howalarmingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = howalarmingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B76B37C1C7839D300226788 /* howalarmingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = howalarmingTests.swift; sourceTree = "<group>"; };
 		4B76B37E1C7839D300226788 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B76B3831C7839D300226788 /* howalarmingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = howalarmingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B76B3871C7839D300226788 /* howalarmingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = howalarmingUITests.swift; sourceTree = "<group>"; };
 		4B76B3891C7839D300226788 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B7FB9031DC75F88000B98D6 /* howalarming.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = howalarming.entitlements; sourceTree = "<group>"; };
 		4BC4ED191CF5A7E100280454 /* AlarmEvent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlarmEvent.swift; sourceTree = "<group>"; };
@@ -151,7 +147,6 @@
 		4B76B37B1C7839D300226788 /* howalarmingTests */ = {
 			isa = PBXGroup;
 			children = (
-				4B76B37C1C7839D300226788 /* howalarmingTests.swift */,
 				4B76B37E1C7839D300226788 /* Info.plist */,
 			);
 			path = howalarmingTests;
@@ -160,7 +155,6 @@
 		4B76B3861C7839D300226788 /* howalarmingUITests */ = {
 			isa = PBXGroup;
 			children = (
-				4B76B3871C7839D300226788 /* howalarmingUITests.swift */,
 				4B76B3891C7839D300226788 /* Info.plist */,
 			);
 			path = howalarmingUITests;
@@ -496,7 +490,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B76B37D1C7839D300226788 /* howalarmingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,7 +497,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B76B3881C7839D300226788 /* howalarmingUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

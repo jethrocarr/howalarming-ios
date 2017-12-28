@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Google
+import Firebase
 import SwiftyJSON
 
 
@@ -22,9 +22,6 @@ class AlarmEventTableViewController: UITableViewController {
         
         // Listen for GCM registration
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        // Define identifier
-        let notificationName = Notification.Name(appDelegate.registrationKey)
         
         // Listen for registration events from AppDelegate
         NotificationCenter.default.addObserver(self, selector: #selector(updateRegistrationStatus), name: Notification.Name(appDelegate.registrationKey), object: nil)
@@ -76,15 +73,15 @@ class AlarmEventTableViewController: UITableViewController {
             if let error = info["error"] {
                 
                 if error == "REMOTE_NOTIFICATION_SIMULATOR_NOT_SUPPORTED_NSERROR_DESCRIPTION" {
-                    // No GCM in the simulator, so load some sample data.
+                    // No FCM in the simulator, so load some sample data.
                     // TODO: Need to write an event simulator
                     loadSampleEvents()
                 }
                 
-                showAlert(title: "Error registering with GCM", message: error)
+                showAlert(title: "Error registering with FCM", message: error)
                 
             } else if let _ = info["registrationToken"] {
-                print("Registration with GCM was successful");
+                print("Registration with FCM was successful");
             } else {
                 print ("Software failure. Guru meditation.")
             }
@@ -136,6 +133,7 @@ class AlarmEventTableViewController: UITableViewController {
                 appDelegate.stateArmed = appDelegate.alarmStateArmed
                 
                 armActionButton.title = "Disarm"
+                armActionButton.isEnabled = true
             break
             
             case "armed":
@@ -143,6 +141,7 @@ class AlarmEventTableViewController: UITableViewController {
                 appDelegate.stateArmed = appDelegate.alarmStateArmed
             
                 armActionButton.title = "Disarm"
+                armActionButton.isEnabled = true
             break
             
             case "disarmed":
@@ -150,6 +149,7 @@ class AlarmEventTableViewController: UITableViewController {
                 appDelegate.stateArmed = appDelegate.alarmStateDisarmed
                 
                 armActionButton.title = "Arm"
+                armActionButton.isEnabled = true
             break
 
             default:
@@ -184,11 +184,14 @@ class AlarmEventTableViewController: UITableViewController {
     
     // MARK: Perform user arm/disarm actions
     @IBAction func armActionButton(_ sender: Any) {
-        /*
-         * We perform the arm/disarm by checking the state and selecting the appropiate action
-         * and sending an command upstream via GCM to the HowAlarming server.
-         */
-        
+
+        // Disable the button. We've issued a command and we don't want repeat action... once the command is executed,
+        // the server will send back an armed/disarmed event, which will result in the UI being updated and the button
+        // being re-enabled.
+        armActionButton.isEnabled = false
+
+        // We perform the arm/disarm by checking the state and selecting the appropiate action
+        // and sending an command upstream via FCM to the HowAlarming server.
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         
         var command: String
@@ -211,10 +214,7 @@ class AlarmEventTableViewController: UITableViewController {
             break
         }
         
-        print("Sending " + command + " action to GCM upstream")
-        
-        
-        if (appDelegate.connectedToGCM) {
+        if (Messaging.messaging().isDirectChannelEstablished) {
             let messageId = ProcessInfo.processInfo.globallyUniqueString
             
             let messageData: [String: Any] = [
@@ -223,13 +223,14 @@ class AlarmEventTableViewController: UITableViewController {
                 "timestamp": String( Date().timeIntervalSince1970 / 1000 )
             ]
             let messageTo: String = appDelegate.gcmSenderID! + "@gcm.googleapis.com"
-        
-            // TODO: Debug
-            print(messageTo)
-        
-            GCMService.sharedInstance().sendMessage(messageData, to: messageTo, withId: messageId)
+            let ttl: Int64 = 3600 // Assume this is seconds? No fucking idea, thanks Google Firebase docs!
+            
+            print("Sending \(command) action to FCM upstream FCM server: \(messageTo)")
+            
+            Messaging.messaging().sendMessage(messageData, to: messageTo, withMessageID: messageId, timeToLive: ttl)
+            
         } else {
-            print("Warning: Unable to send action due to GCM disconnection")
+            print("Warning: Unable to send upstream fCM message due to direct connection not being established")
         }
     }
     

@@ -8,19 +8,16 @@
 
 import UIKit
 import UserNotifications
-import Google
+import Firebase
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GCMReceiverDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     
     var window: UIWindow?
     
-    var connectedToGCM = false
-    var subscribedToTopic = false
+    // We set this with the details we extract from FCM and the settings plist file and use whenever generating messages
     var gcmSenderID: String?
     var registrationToken: String?
-    var registrationOptions = [String: Any]()
-    var messagesSent = 0
     
     // We track alarm state in-app, but this also gets push from the server everytime the app view is
     // opened to check the state, since it's possible the app has missed some messages.
@@ -29,156 +26,65 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
     let alarmStateDisarmed = 2
     var stateArmed = 0
     
+    // Keys used to label different internal messages between AppDelegate and ViewControllers
     let registrationKey = "onRegistrationCompleted"
     let messageKey = "onMessageReceived"
-    let subscriptionTopic = "/topics/global"
     
-    // [START register_for_remote_notifications]
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // [START_EXCLUDE]
-        // Configure the Google context: parses the GoogleService-Info.plist, and initializes
-        // the services that have entries in the file
-        var configureError:NSError?
-        GGLContext.sharedInstance().configureWithError(&configureError)
-        assert(configureError == nil, "Error configuring Google services: \(configureError!)")
-        gcmSenderID = GGLContext.sharedInstance().configuration.gcmSenderID
-        // [END_EXCLUDE]
         
-        // Register for remote notifications
+        // Here we are extracting out the GCM SENDER ID from the Google PList file. There used to be an easy way
+        // to get this with GCM, but it's non-obvious with FCM so we're just going to read the plist file.
+        if let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist") {
+            let dictRoot = NSDictionary(contentsOfFile: path)
+            if let dict = dictRoot {
+                if let gcmSenderId = dict["GCM_SENDER_ID"] as? String {
+                    self.gcmSenderID = gcmSenderId
+                }
+            }
+        }
+        
+        // Configure FCM and other Firebase APIs with a single call.
+        FirebaseApp.configure()
+        
+        // Setup FCM messaging
+        Messaging.messaging().delegate = self
+        Messaging.messaging().shouldEstablishDirectChannel = true
+        
+        // Trigger when FCM establishes it's direct connection. We want to know this to avoid race conditions where we
+        // try to post upstream messages before the direct connection is ready... which kind of sucks.
+        NotificationCenter.default.addObserver(self, selector: #selector(onMessagingDirectChannelStateChanged(_:)), name: .MessagingConnectionStateChanged, object: nil)
+        
+        // Trigger if we fail to send a message upstream for any reason.
+        NotificationCenter.default.addObserver(self, selector: #selector(onMessagingUpstreamFailure(_:)), name: .MessagingSendError, object: nil)
+    
+        // Register for remote notifications (APNS)
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
             (granted, error) in
-            //Parse errors and track state
+            // We don't have errors, nothing to do right? ;-)
         }
         application.registerForRemoteNotifications()
-        // [END register_for_remote_notifications]
-        
-        // [START start_gcm_service]
-        let gcmConfig = GCMConfig.default()!
-        gcmConfig.receiverDelegate = self
-        GCMService.sharedInstance().start(with: gcmConfig)
-        // [END start_gcm_service]
     
         return true
     }
     
-    func subscribeToTopic() {
-        // If the app has a registration token and is connected to GCM, proceed to subscribe to the topic
-        if(registrationToken != nil && connectedToGCM) {
-            GCMPubSub.sharedInstance().subscribe(withToken: self.registrationToken, topic: subscriptionTopic,
-                options: nil, handler: {(error) -> Void in
-                    if (error != nil) {
-                        // Treat the "already subscribed" error more gently.
-                        // TODO: Is there a smarter way of handling this? Seems to be no code attribute on Swift 4 error object :-(
-                        if (error.debugDescription.range(of: "Code=3001") != nil) {
-                            print("Already subscribed to the topic, nothing to do");
-                        } else {
-                            print("Subscription failed: \(error!.localizedDescription)");
-                        }
-                    } else {
-                        self.subscribedToTopic = true;
-                        print("Subscribed to \(self.subscriptionTopic)");
-                    }
-            })
-        }
-    }
-    
-    // [START connect_gcm_service]
     func applicationDidBecomeActive(_ application: UIApplication) {
-        // Connect to the GCM server to receive non-APNS notifications
-        GCMService.sharedInstance().connect(handler: {
-            (error) -> Void in
-            if error != nil {
-                print("Could not connect to GCM: \(error!.localizedDescription)")
-                
-                // Tell our View Controller about our failure.
-                let userInfo = ["error": error!.localizedDescription]
-                let notificationName = Notification.Name(self.registrationKey)
-                NotificationCenter.default.post(name: notificationName, object: nil, userInfo: userInfo)
-            
-            } else {
-                self.connectedToGCM = true
-                print("Connected to GCM")
-                
-                self.subscribeToTopic()
-
-                // Send ping to GCM server. This is used to make sure the GCM server is aware of
-                // our device and can register it if it's not already done so. Technically, this should
-                // live in the registration portion of the application, but as our server is currently
-                // not persistent, we ping it on any time the application is opened.
-                //
-                // The ping also results in a silent status GCM message being sent back advising of
-                // the current alarm status (eg armed/disarmed) to assist with maintaining state.
-                print("Sending ping message to GCM")
-                
-                let messageId = ProcessInfo().globallyUniqueString
-                let messageData: [String: String] = [
-                    "registration_token": self.registrationToken!,
-                    "command": "ping",
-                    "timestamp": String( Date().timeIntervalSince1970 / 1000 )
-                ]
-                let messageTo: String = self.gcmSenderID! + "@gcm.googleapis.com"
-                
-                print("Sending message to GCM:")
-                print(messageTo)
-                
-                GCMService.sharedInstance().sendMessage(messageData, to: messageTo, withId: messageId)
-            }
-        })
-
-    }
-    // [END connect_gcm_service]
-    
-    // [START disconnect_gcm_service]
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        print("Disconnecting GCM service...")
-        
-        GCMService.sharedInstance().disconnect()
-        self.connectedToGCM = false
-    }
-    // [END disconnect_gcm_service]
-    
-    
-    // [START receive_apns_token]
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data ) {
-        // [END receive_apns_token]
-    
-
-        // [START get_gcm_reg_token]
-    
-        // Create a config and set a delegate that implements the GGLInstaceIDDelegate protocol.
-        let instanceIDConfig = GGLInstanceIDConfig.default()!
-        instanceIDConfig.delegate = self
-    
-        // Start the GGLInstanceID shared instance with that config and request a registration
-        // token to enable reception of notifications
-        GGLInstanceID.sharedInstance().start(with: instanceIDConfig)
-            registrationOptions = [
-                kGGLInstanceIDRegisterAPNSOption:deviceToken as AnyObject,
-                kGGLInstanceIDAPNSServerTypeSandboxOption:true as AnyObject
-        ]
-        
-        GGLInstanceID.sharedInstance().token(withAuthorizedEntity: gcmSenderID, scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
-        
-        // [END get_gcm_reg_token]
+        // Nothing going on right now.
     }
     
-    // [START receive_apns_token_error]
+
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error ) {
         print("Registration for remote notification failed with error: \(error.localizedDescription)")
-        // [END receive_apns_token_error]
         
         let userInfo = ["error": error.localizedDescription]
         let notificationName = Notification.Name(self.registrationKey)
         NotificationCenter.default.post(name: notificationName, object: nil, userInfo: userInfo)
     }
     
-    // [START ack_message_reception]
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any]) {
-        
+        // If you are receiving a notification message while your app is in the background,
+        // this callback will not be fired till the user taps on the notification launching the application.
         print("Remote notification received: \(userInfo)")
-        
-        // This works only if the app started the GCM service
-        GCMService.sharedInstance().appDidReceiveMessage(userInfo);
         
         // Pass the recieved message to the view controller
         let notificationName = Notification.Name(self.messageKey)
@@ -186,11 +92,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler handler: @escaping (UIBackgroundFetchResult) -> Void) {
-        
+        // If you are receiving a notification message while your app is in the background,
+        // this callback will not be fired till the user taps on the notification launching the application.
         print("Remote notification received w/ handler: \(userInfo)")
-        
-        // This works only if the app started the GCM service
-        GCMService.sharedInstance().appDidReceiveMessage(userInfo);
         
         // Handle the received message by passing on to the ViewController.
         let notificationName = Notification.Name(self.messageKey)
@@ -199,58 +103,73 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GGLInstanceIDDelegate, GC
         // Invoke the completion handler passing the appropriate UIBackgroundFetchResult value
         handler(UIBackgroundFetchResult.noData);
     }
-    // [END ack_message_reception]
     
-    func registrationHandler(registrationToken: String!, error: Error!) {
-        if (registrationToken != nil) {
-            self.registrationToken = registrationToken
-            print("Registration Token: \(registrationToken)")
-            self.subscribeToTopic()
-            let userInfo = ["registrationToken": registrationToken]
+    func application(received remoteMessage: MessagingRemoteMessage) {
+        // Only invoked when recieving an FCM direct channel push message. Can only occur when the app is running in
+        // the foreground, and only after the inital startup and establishment of the direct channel connection has
+        // been completed.
+        print("FCM direct channel push message recieved")
+        
+        let notificationName = Notification.Name(self.messageKey)
+        NotificationCenter.default.post(name: notificationName, object: nil, userInfo: remoteMessage.appData)
+    }
+    
+    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        // This is fired whenever FCM gets a new app token.
+        // Deprecated, but MessagingDelegate protocol demands that we have it! >:-(
+        print("Firebase registration token via deprecated refresh method: \(fcmToken)")
+        self.registrationToken = fcmToken
+    }
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        // This is fired on inital startup on the application, or when the application changes.
+        print("Firebase registration token: \(fcmToken)")
+        self.registrationToken = fcmToken
+    }
+    
+    @objc
+    func onMessagingDirectChannelStateChanged(_ notification: Notification) {
+        // This is our own function listen for the direct connection to be established.
+        print("Is FCM Direct Channel Established: \(Messaging.messaging().isDirectChannelEstablished)")
+        
+        if (Messaging.messaging().isDirectChannelEstablished) {
+            // Set the FCM token. Given that a direct channel has been established, it kind of implies that this
+            // must be available to us..
+            if self.registrationToken == nil {
+                if let fcmToken = Messaging.messaging().fcmToken {
+                    self.registrationToken = fcmToken
+                    print("Firebase registration token: \(fcmToken)")
+                }
+            }
             
-            // Tell the ViewController that we registered.
-            let notificationName = Notification.Name(self.registrationKey)
-            NotificationCenter.default.post(name: notificationName, object: nil, userInfo: userInfo)
-        } else {
-            print("Registration to GCM failed with error: \(error.localizedDescription)")
-            let userInfo = ["error": error.localizedDescription]
-            
-            let notificationName = Notification.Name(self.registrationKey)
-            NotificationCenter.default.post(name: notificationName, object: nil, userInfo: userInfo)
+            // Send a "ping" message to the HowAlarming GCM/FCM server. This is required to ensure that the server
+            // becomes aware of our device and can register it. Technically, this should be persisted by the server
+            // but we haven't implemented any kind of persistency so for now we rely on this ping for the registration
+            // to take place.
+            //
+            // The ping also performs another vital role, which is that it triggers a silent status message being
+            // sent back advising the current alarm status (eg armed/disarmed), which we need for UI controls to be
+            // accurate.
+        
+            let messageId = ProcessInfo().globallyUniqueString
+            let messageData: [String: String] = [
+                "registration_token": self.registrationToken!,
+                "command": "ping",
+                "timestamp": String( Date().timeIntervalSince1970 / 1000 )
+            ]
+            let messageTo: String = self.gcmSenderID! + "@gcm.googleapis.com"
+            let ttl: Int64 = 3600 // Assume this is seconds? No fucking idea, thanks Google Firebase docs!
+        
+            print("Sending ping message to FCM server: \(messageTo)")
+    
+            Messaging.messaging().sendMessage(messageData, to: messageTo, withMessageID: messageId, timeToLive: ttl)
         }
     }
     
-    // [START on_token_refresh]
-    func onTokenRefresh() {
-        // A rotation of the registration tokens is happening, so the app needs to request a new token.
-        print("The GCM registration token needs to be changed. :-O")
-        GGLInstanceID.sharedInstance().token(withAuthorizedEntity: gcmSenderID, scope: kGGLInstanceIDScopeGCM, options: registrationOptions, handler: registrationHandler)
+    @objc
+    func onMessagingUpstreamFailure(_ notification: Notification) {
+        // FCM tends not to give us any kind of useful message here, but at least we now know it failed for when we start debugging it.
+        print("A failure occurred when attempting to send a message upstream via FCM")
     }
-    // [END on_token_refresh]
-    
-    // [START upstream_callbacks]
-    func willSendDataMessage(withID messageID: String!, error: Error!) {
-        if (error != nil) {
-            // Failed to send the message.
-            print ("GCM message failed to send: " + messageID)
-        } else {
-            // Will send message, you can save the messageID to track the message
-            print ("GCM message pending delivery: " + messageID)
-        }
-    }
-    
-    func didSendDataMessage(withID messageID: String!) {
-        // Did successfully send message identified by messageID
-        print ("Successfully sent GCM message: " + messageID)
-    }
-    // [END upstream_callbacks]
-    
-    func didDeleteMessagesOnServer() {
-        // Some messages sent to this device were deleted on the GCM server before reception, likely
-        // because the TTL expired. The client should notify the app server of this, so that the app
-        // server can resend those messages.
-        print("You lost messages due to expiration")
-    }
-    
     
 }
