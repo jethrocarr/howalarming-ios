@@ -223,7 +223,7 @@ class AlarmEventTableViewController: UITableViewController {
                 "timestamp": String( Date().timeIntervalSince1970 / 1000 )
             ]
             let messageTo: String = appDelegate.gcmSenderID! + "@gcm.googleapis.com"
-            let ttl: Int64 = 3600 // Assume this is seconds? No fucking idea, thanks Google Firebase docs!
+            let ttl: Int64 = 0 // Setting to zero means if it can't complete delivery immediately, it abandons the message
             
             print("Sending \(command) action to FCM upstream FCM server: \(messageTo)")
             
