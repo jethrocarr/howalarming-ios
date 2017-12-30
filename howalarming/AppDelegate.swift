@@ -10,6 +10,13 @@ import UIKit
 import UserNotifications
 import Firebase
 
+// The various states that our alarm can be in (for the purposes of arm/disarming).
+enum AlarmStates {
+    case unknown
+    case armed
+    case disarmed
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     
@@ -21,10 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     
     // We track alarm state in-app, but this also gets push from the server everytime the app view is
     // opened to check the state, since it's possible the app has missed some messages.
-    let alarmStateUnknown = 0
-    let alarmStateArmed = 1
-    let alarmStateDisarmed = 2
-    var stateArmed = 0
+    var stateArmed = AlarmStates.unknown
     
     // Keys used to label different internal messages between AppDelegate and ViewControllers
     let registrationKey = "onRegistrationCompleted"

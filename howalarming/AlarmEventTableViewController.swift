@@ -28,6 +28,9 @@ class AlarmEventTableViewController: UITableViewController {
 
         // Listen for messages arriving from GCM that require a UI update or display.
         NotificationCenter.default.addObserver(self, selector: #selector(handleReceivedMessage), name: Notification.Name(appDelegate.messageKey), object: nil)
+        
+        // Trigger everytime the View comes into the foreground
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: .UIApplicationWillEnterForeground, object: nil)
 
         // Load the saved state
         if let savedAlarmEvents = loadAlarmEvents() {
@@ -40,6 +43,14 @@ class AlarmEventTableViewController: UITableViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
+    @objc
+    func willEnterForeground() {
+        // We don't ever want the arm action button to be displaying the wrong/stale action (eg if we've missed a status
+        // message) so we should set it to unknown and disabled whenever this view is reloaded (eg background app -> foreground)
+        // which will force it to wait for the status message to arrive with accurate information.
+        armActionButton.title = "Unknown"
+        armActionButton.isEnabled = false
+    }
     
     // MARK: Load data at launch
     func loadAlarmEvents() -> [AlarmEvent]? {
@@ -130,7 +141,7 @@ class AlarmEventTableViewController: UITableViewController {
         switch event["type"].stringValue {
             case "alarm":
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                appDelegate.stateArmed = appDelegate.alarmStateArmed
+                appDelegate.stateArmed = AlarmStates.armed
                 
                 armActionButton.title = "Disarm"
                 armActionButton.isEnabled = true
@@ -138,7 +149,7 @@ class AlarmEventTableViewController: UITableViewController {
             
             case "armed":
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                appDelegate.stateArmed = appDelegate.alarmStateArmed
+                appDelegate.stateArmed = AlarmStates.armed
             
                 armActionButton.title = "Disarm"
                 armActionButton.isEnabled = true
@@ -146,7 +157,7 @@ class AlarmEventTableViewController: UITableViewController {
             
             case "disarmed":
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                appDelegate.stateArmed = appDelegate.alarmStateDisarmed
+                appDelegate.stateArmed = AlarmStates.disarmed
                 
                 armActionButton.title = "Arm"
                 armActionButton.isEnabled = true
@@ -184,6 +195,12 @@ class AlarmEventTableViewController: UITableViewController {
     
     // MARK: Perform user arm/disarm actions
     @IBAction func armActionButton(_ sender: Any) {
+        
+        guard Messaging.messaging().isDirectChannelEstablished == true else {
+            print("Warning: Unable to send upstream fCM message due to direct connection not being established")
+            showAlert(title: "Unable to issue command", message: "FCM direct connection not established, unable to issue command")
+            return
+        }
 
         // Disable the button. We've issued a command and we don't want repeat action... once the command is executed,
         // the server will send back an armed/disarmed event, which will result in the UI being updated and the button
@@ -197,15 +214,15 @@ class AlarmEventTableViewController: UITableViewController {
         var command: String
         
         switch (appDelegate.stateArmed) {
-            case appDelegate.alarmStateUnknown:
+            case AlarmStates.unknown:
                 command = "disarm"
             break
 
-            case appDelegate.alarmStateDisarmed:
+            case AlarmStates.disarmed:
                 command = "arm"
             break
             
-            case appDelegate.alarmStateArmed:
+            case AlarmStates.armed:
                 command = "disarm"
             break
             
@@ -213,25 +230,20 @@ class AlarmEventTableViewController: UITableViewController {
                 command = "disarm"
             break
         }
+    
+        let messageId = ProcessInfo.processInfo.globallyUniqueString
         
-        if (Messaging.messaging().isDirectChannelEstablished) {
-            let messageId = ProcessInfo.processInfo.globallyUniqueString
-            
-            let messageData: [String: Any] = [
-                "registration_token": appDelegate.registrationToken!,
-                "command": command,
-                "timestamp": String( Date().timeIntervalSince1970 / 1000 )
-            ]
-            let messageTo: String = appDelegate.gcmSenderID! + "@gcm.googleapis.com"
-            let ttl: Int64 = 0 // Setting to zero means if it can't complete delivery immediately, it abandons the message
-            
-            print("Sending \(command) action to FCM upstream FCM server: \(messageTo)")
-            
-            Messaging.messaging().sendMessage(messageData, to: messageTo, withMessageID: messageId, timeToLive: ttl)
-            
-        } else {
-            print("Warning: Unable to send upstream fCM message due to direct connection not being established")
-        }
+        let messageData: [String: Any] = [
+            "registration_token": appDelegate.registrationToken!,
+            "command": command,
+            "timestamp": String( Date().timeIntervalSince1970 / 1000 )
+        ]
+        let messageTo: String = appDelegate.gcmSenderID! + "@gcm.googleapis.com"
+        let ttl: Int64 = 0 // Setting to zero means if it can't complete delivery immediately, it abandons the message
+        
+        print("Sending \(command) action to FCM upstream FCM server: \(messageTo)")
+        
+        Messaging.messaging().sendMessage(messageData, to: messageTo, withMessageID: messageId, timeToLive: ttl)
     }
     
     
